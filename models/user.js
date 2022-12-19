@@ -40,7 +40,7 @@ class User extends Sequelize.Model {
             collate: 'utf8_general_ci' // 정렬
         });
     }
-
+    
     static asociate(db) {
         
     }

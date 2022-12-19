@@ -2,8 +2,22 @@ const Sequelize = require('sequelize');
 
 class Hashtag extends Sequelize.Model {
     static initiate(sequelize) {
-        // 모델(테이블) 정보들
-        // 모델 관계
+        Hashtag.init({
+            title: {
+                type: Sequelize.STRING(15),
+                allowNull: false,
+                unique: true,
+            }
+        }, {
+            sequelize,
+            timestamps: true,
+            underscored: false,
+            paranoid: false,
+            modelName: 'Hashtag',
+            tableName: 'hashtags',
+            charset: 'utf8mb4',
+            collate: 'utf8mb4_general_ci',
+        });
     }
 
     static asociate(db) {
