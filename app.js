@@ -3,7 +3,7 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const path =  require('path');
 const session = require('express-session');
-const nunjucks = require('numjucks');
+const nunjucks = require('nunjucks');
 const dotenv = require('dotenv');
 
 dotenv.config(); // 여기부터 사용할 수 있다. => (process.env.COOKIE_SECRET)
