@@ -16,8 +16,8 @@ class User extends Sequelize.Model {
                 allowNull: false,
             },
             password: {
-                type: Sequelize:STRING(100),
-                allowNull: trure,
+                type: Sequelize.STRING(100),
+                allowNull: true,
             },
             provider: {
                 type: Sequelize.ENUM('local', 'kakao'),
@@ -41,8 +41,19 @@ class User extends Sequelize.Model {
         });
     }
     
+    // 테이블에 관계는 asociate 에서 정의한다.
     static asociate(db) {
-        
+        db.User.hasMany(db.Post);
+        db.User.belongsToMany(db.User, { // 팔로워
+            foreignKey: 'followingId',
+            as: 'Followers',
+            through: 'Follow',
+        });
+        db.User.belongsToMany(db.User, { // 팔로잉
+            foreignKey: 'followerId',
+            as: 'Followings',
+            through: 'Follow',
+        })
     }
 }
 

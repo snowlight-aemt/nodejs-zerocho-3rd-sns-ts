@@ -5,6 +5,7 @@ const path =  require('path');
 const session = require('express-session');
 const nunjucks = require('nunjucks');
 const dotenv = require('dotenv');
+const { sequelize } = require('./models');
 
 dotenv.config(); // 여기부터 사용할 수 있다. => (process.env.COOKIE_SECRET)
 const pageRouter = require('./routes/page');
@@ -17,6 +18,14 @@ nunjucks.configure('views', {
     watch: true,
 });
 
+// 데이터베이스 생성 명령 : npx sequelize db:create
+sequelize.sync({ force:true }) // 테이블 삭제 후 다시 생성
+    .then(() => {
+        console.log('데이터베이스 연결 성공');
+    })
+    .catch((err) => {
+        console.error(err);
+    });
 // 6장 참고
 app.use(morgan('dev')); // combined
 app.use(express.static(path.join(__dirname, 'public'))); // static resource location
