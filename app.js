@@ -4,13 +4,16 @@ const morgan = require('morgan');
 const path =  require('path');
 const session = require('express-session');
 const nunjucks = require('nunjucks');
+const passport = require('passport');
 const dotenv = require('dotenv');
 const { sequelize } = require('./models');
 
 dotenv.config(); // 여기부터 사용할 수 있다. => (process.env.COOKIE_SECRET)
 const pageRouter = require('./routes/page');
+const passportConfig = require('./passport');
 
 const app = express();
+passportConfig();
 app.set('port', process.env.PORT || 8001);
 app.set('view engine', 'html');
 nunjucks.configure('views', {
@@ -26,7 +29,7 @@ sequelize.sync({ force:true }) // 테이블 삭제 후 다시 생성
     .catch((err) => {
         console.error(err);
     });
-// 6장 참고
+// 6장 참고 미들웨어
 app.use(morgan('dev')); // combined
 app.use(express.static(path.join(__dirname, 'public'))); // static resource location
 app.use(express.json());                            // json 요청
@@ -41,6 +44,12 @@ app.use(session({
         secure: false,
     }
 }));
+// passport 는 session 미들웨어 밑에서 생성해야만 한다. !!
+app.use(passport.initialize());
+// 위에 initialize 에서 login 를 체크가 완료되면
+// passport.session 로 세션에 저장한다.
+app.use(passport.session()); // connect.sid 라는 이름으로 세션 쿠키가 브라우저로 전송.
+
 app.use('/', pageRouter);
 
 // 미들웨어는 next(error) 를 해야지만 다음 미들웨어로 이동한다.
