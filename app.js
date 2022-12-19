@@ -47,7 +47,7 @@ app.use((err, req, res, next) => {
     res.locals.error = process.env.NODE_ENV !== 'production' ? err : {}; // 에러 로그를 서비스한테 넘겨.
     res.static(err.status || 500);
     res.render('error');
-    // views/error.html 위치를 찾기 위한 설정.
+    // views/error.html 위치를 찾기 위한 설정. res.render(.....);)
         // app.set('view engine', 'html');
         // nunjucks.configure('views', {
             // express: app,
