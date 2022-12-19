@@ -34,6 +34,7 @@ app.use(session({
 }));
 app.use('/', pageRouter);
 
+// 미들웨어는 next(error) 를 해야지만 다음 미들웨어로 이동한다.
 // 404 NOT FOUND
 app.use((req, res, next) => { 
     const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
