@@ -10,6 +10,7 @@ const { sequelize } = require('./models');
 
 dotenv.config(); // 여기부터 사용할 수 있다. => (process.env.COOKIE_SECRET)
 const pageRouter = require('./routes/page');
+const authRouter = require('./routes/auth');
 const passportConfig = require('./passport');
 
 const app = express();
@@ -52,6 +53,7 @@ app.use(passport.initialize()); // req.user, req.login, req.isAuth.., req.logout
 app.use(passport.session()); // connect.sid 라는 이름으로 세션 쿠키가 브라우저로 전송.
 
 app.use('/', pageRouter);
+app.use('/auth', authRouter);
 
 // 미들웨어는 next(error) 를 해야지만 다음 미들웨어로 이동한다.
 // 404 NOT FOUND
