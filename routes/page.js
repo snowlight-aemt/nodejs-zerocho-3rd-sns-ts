@@ -16,6 +16,7 @@ router.use((req, res, next) => {
     res.locals.followerCount = 0;
     res.locals.followingCount = 0;
     res.locals.followingIdList = [];
+    // req.session.data = 1234 // 사용자 로그아웃 까지 저장되는 데이터
     next();
 });
 

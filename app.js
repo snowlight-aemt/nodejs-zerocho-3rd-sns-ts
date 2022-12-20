@@ -35,7 +35,7 @@ app.use(morgan('dev')); // combined
 app.use(express.static(path.join(__dirname, 'public'))); // static resource location
 app.use(express.json());                            // json 요청 (req.body 를 ajax json 요청으로 부터)
 app.use(express.urlencoded({ extended: false}));    // form 요청 (req.body 폼으로 부터)
-app.use(cookieParser(process.env.COOKIE_SECRET));   // 쿠키 전송 처리
+app.use(cookieParser(process.env.COOKIE_SECRET));   // 쿠키 전송 처리 { connect.sid=1234592034923840 } 
 app.use(session({
     resave: false,
     saveUninitialized: false,
@@ -51,6 +51,7 @@ app.use(passport.initialize()); // req.user, req.login, req.isAuth.., req.logout
 // 위에 initialize 에서 login 를 체크가 완료되면
 // passport.session 로 세션에 저장한다.
 app.use(passport.session()); // connect.sid 라는 이름으로 세션 쿠키가 브라우저로 전송.
+// 브라우저 connect.sid=1234592034923840
 
 app.use('/', pageRouter);
 app.use('/auth', authRouter);
