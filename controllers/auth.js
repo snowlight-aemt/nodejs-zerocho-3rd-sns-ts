@@ -20,9 +20,30 @@ exports.join = async (req, res, next) => {
         next(error);
     }
 }
+// POST /auth/login
+// 1. login 이 호출
+// 2. 'local' > localStrategy.js 
+// 3. 
+exports.login = (req, res, next) => {
+    // 콜백 함수 localStrategy.js 와 연관.
+    password.authenticate('local', (authError, user, info) => {
+        if (authError) { // 서버 실패
+            console.error(authError); 
+            return next(authError);
+        }
 
-exports.login = () => {
+        if (!user) { // 로직 실패
+            return res.redirect(`/?loginError=${info.message}`);
+        }
 
+        return req.login(user, (loginError) => { // 로그인 성공
+            if (loginError) {
+                console.error(loginError);
+                return next(loginError);
+            }
+            return res.redirect('/');
+        });
+    })(req, res, next);
 }
 
 exports.logout = () => {
