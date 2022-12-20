@@ -33,8 +33,8 @@ sequelize.sync({ force:true }) // 테이블 삭제 후 다시 생성
 // 6장 참고 미들웨어
 app.use(morgan('dev')); // combined
 app.use(express.static(path.join(__dirname, 'public'))); // static resource location
-app.use(express.json());                            // json 요청
-app.use(express.urlencoded({ extended: false}));    // form 요청
+app.use(express.json());                            // json 요청 (req.body 를 ajax json 요청으로 부터)
+app.use(express.urlencoded({ extended: false}));    // form 요청 (req.body 폼으로 부터)
 app.use(cookieParser(process.env.COOKIE_SECRET));   // 쿠키 전송 처리
 app.use(session({
     resave: false,
