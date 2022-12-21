@@ -28,6 +28,6 @@ const upload = multer({
 router.post('/img', isLoggedIn, upload.single('img'), afterUploadImage);
 
 const upload2 = multer();
-router.post('/', isLoggedIn, upload2.none, uploadPost);
+router.post('/', isLoggedIn, upload2.none(), uploadPost);
 
 module.exports = router;
