@@ -67,7 +67,7 @@ app.use((err, req, res, next) => {
     res.locals.message = err.message;
     // 배포 모드 err 를 숨김.
     res.locals.error = process.env.NODE_ENV !== 'production' ? err : {}; // 에러 로그를 서비스한테 넘겨.
-    res.static(err.status || 500);
+    res.status(err.status || 500);
     res.render('error');
     // views/error.html 위치를 찾기 위한 설정. res.render(.....);)
         // app.set('view engine', 'html');

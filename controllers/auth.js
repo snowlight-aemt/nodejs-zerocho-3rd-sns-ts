@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const passport = require('passport');
 const bcrypt = require('bcrypt');
 // views/join.html > /auth/join 요청
 exports.join = async (req, res, next) => {
@@ -27,7 +28,7 @@ exports.join = async (req, res, next) => {
 exports.login = (req, res, next) => {
     // 콜백 함수 localStrategy.js 와 연관.
     // 아래의 소스가 미들웨어 확장 패턴 (req, res, next);
-    password.authenticate('local', (authError, user, info) => {
+    passport.authenticate('local', (authError, user, info) => {
         if (authError) { // 서버 실패
             console.error(authError); 
             return next(authError);
