@@ -11,6 +11,7 @@ const { sequelize } = require('./models');
 dotenv.config(); // 여기부터 사용할 수 있다. => (process.env.COOKIE_SECRET)
 const pageRouter = require('./routes/page');
 const authRouter = require('./routes/auth');
+const postRouter = require('./routes/post');
 const passportConfig = require('./passport');
 
 const app = express();
@@ -33,6 +34,7 @@ sequelize.sync({ force:true }) // 테이블 삭제 후 다시 생성
 // 6장 참고 미들웨어
 app.use(morgan('dev')); // combined
 app.use(express.static(path.join(__dirname, 'public'))); // static resource location
+app.use('/img', express.static(path.join(__dirname, 'uploads'))); // static resource location
 app.use(express.json());                            // json 요청 (req.body 를 ajax json 요청으로 부터)
 app.use(express.urlencoded({ extended: false}));    // form 요청 (req.body 폼으로 부터)
 app.use(cookieParser(process.env.COOKIE_SECRET));   // 쿠키 전송 처리 { connect.sid=1234592034923840 } 
@@ -55,6 +57,7 @@ app.use(passport.session()); // connect.sid 라는 이름으로 세션 쿠키가
 
 app.use('/', pageRouter);
 app.use('/auth', authRouter);
+app.use('/post', postRouter);
 
 // 미들웨어는 next(error) 를 해야지만 다음 미들웨어로 이동한다.
 // 404 NOT FOUND
