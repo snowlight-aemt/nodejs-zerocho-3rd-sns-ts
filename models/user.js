@@ -42,7 +42,7 @@ class User extends Sequelize.Model {
     }
     
     // 테이블에 관계는 asociate 에서 정의한다.
-    static asociate(db) {
+    static associate(db) {
         db.User.hasMany(db.Post);
         db.User.belongsToMany(db.User, { // 팔로워
             foreignKey: 'followingId',
