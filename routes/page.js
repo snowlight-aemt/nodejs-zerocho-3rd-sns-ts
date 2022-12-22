@@ -13,9 +13,9 @@ router.use((req, res, next) => {
     // app.js ===> app.use(passport.intialize()) 를 진행가 실행 될 때 위에 필드과 함수가 추가된다. 
 
     res.locals.user = req.user;
-    res.locals.followerCount = 0;
-    res.locals.followingCount = 0;
-    res.locals.followingIdList = [];
+    res.locals.followerCount = req.user?.Followers?.length || 0;
+    res.locals.followingCount = req.user?.Followings?.length || 0;
+    res.locals.followingIdList = req.user?.Followings?.map(f => f.id) || [];
     // req.session.data = 1234 // 사용자 로그아웃 까지 저장되는 데이터
     next();
 });

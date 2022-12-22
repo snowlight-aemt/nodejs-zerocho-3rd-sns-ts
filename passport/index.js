@@ -13,7 +13,21 @@ module.exports = () => {
 
     // 세션 쿠키에서 구분한 id 를 가지고 user 객체는 DB 에서 불러서 객체를 만든다.
     passport.deserializeUser((id, done) => { 
-        User.findOne({where: { id }})
+        User.findOne({
+            where: { id },
+            include: [
+                {
+                    model: User,
+                    attributes: ['id', 'nick'],
+                    as: 'Followers',
+                },
+                {
+                    model: User,
+                    attributes: ['id', 'nick'],
+                    as: 'Followings',
+                }
+            ]
+        })
             .then((user) => done(null, user)) // req.user
             .catch(err => done(err));
     });
