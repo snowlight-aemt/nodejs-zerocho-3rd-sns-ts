@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {renderProfile, renderJoin, renderMain} = require('../controllers/page');
+const {renderProfile, renderJoin, renderMain, renderHashtag} = require('../controllers/page');
 const {isLoggedIn, isNotLoggedIn} = require('../middlewares')
 
 // 공적으로 사용하는 변수(데이터) 를 넣을 수 있다?
@@ -25,5 +25,6 @@ router.use((req, res, next) => {
 router.get('/profile', isLoggedIn, renderProfile);
 router.get('/join', isNotLoggedIn, renderJoin);
 router.get('/', renderMain);
+router.get('/hashtag', renderHashtag);
 
 module.exports = router;
