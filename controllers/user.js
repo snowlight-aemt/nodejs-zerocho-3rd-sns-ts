@@ -1,13 +1,13 @@
 const User = require('../models/user');
+const { follow } =require('../services/user');
 
 exports.follow = async (req, res, next) => {
     try {
-        const user = await User.findOne({ where: { id: req.user.id }});
-        if (user) {
-            await user.addFollowing(parseInt(req.params.id, 10));
+        const message = await follow(req.user.id, req.params.id);
+        if (message === 'ok') {
             res.send('success');
-        } else {
-            res.status(404).send('no user');
+        } else if (message === 'no user') {
+            res.status(404).send(message);
         }
     } catch (error) {
         console.error(error);
