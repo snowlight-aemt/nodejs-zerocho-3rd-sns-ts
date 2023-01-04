@@ -1,8 +1,10 @@
-const User = require('../models/user');
-const passport = require('passport');
-const bcrypt = require('bcrypt');
+import { RequestHandler } from "express";
+
+import User from '../models/user';
+import passport from 'passport';
+import bcrypt from 'bcrypt';
 // views/join.html > /auth/join 요청
-exports.join = async (req, res, next) => {
+const join: RequestHandler = async (req, res, next) => {
     const { nick, email, password } = req.body;
     try {
         const exUser = await User.findOne({ where: { email } });
@@ -25,7 +27,7 @@ exports.join = async (req, res, next) => {
 // 1. login 이 호출
 // 2. 'local' > localStrategy.ts
 // 3. 
-exports.login = (req, res, next) => {
+const login: RequestHandler = (req, res, next) => {
     // 콜백 함수 localStrategy.ts 와 연관.
     // 아래의 소스가 미들웨어 확장 패턴 (req, res, next);
     passport.authenticate('local', (authError, user, info) => {
@@ -48,7 +50,7 @@ exports.login = (req, res, next) => {
     })(req, res, next);
 }
 
-exports.logout = (req, res, next) => {
+const logout: RequestHandler = (req, res, next) => {
     req.logout(() => {
         res.redirect('/');
     });
@@ -71,3 +73,5 @@ exports.logout = (req, res, next) => {
 // 4. req.session 에 저장된 아이디로 데이터베이스에서 사용자 조회
 // 5. 조회된 사용자 정보를 req.user 에 저장
 // 6. 라우터에서 req.user 객체 사용 가능
+
+export { logout, join, login };

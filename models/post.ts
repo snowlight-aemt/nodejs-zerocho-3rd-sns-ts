@@ -1,6 +1,10 @@
-import Sequelize, { CreationOptional} from 'sequelize';
+import Sequelize, {
+    BelongsToManyAddAssociationMixin, BelongsToManyAddAssociationsMixin,
+    CreationOptional
+} from 'sequelize';
 import User from './user';
 import Hashtag from "./hashtag";
+import {Hash} from "crypto";
 
 class Post extends Sequelize.Model {
     declare id: CreationOptional<number>;
@@ -8,6 +12,8 @@ class Post extends Sequelize.Model {
     declare img: string;
     declare createdAt: CreationOptional<Date>;
     declare updatedAt: CreationOptional<Date>;
+
+    declare addHashtags: BelongsToManyAddAssociationsMixin<Hashtag, number>;
 
     static initiate(sequelize: Sequelize.Sequelize) {
         Post.init({

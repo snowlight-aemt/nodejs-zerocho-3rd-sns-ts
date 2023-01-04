@@ -1,13 +1,14 @@
-const express = require('express');
+import express from 'express';
+import {renderProfile, renderJoin, renderMain, renderHashtag} from '../controllers/page';
+import {isLoggedIn, isNotLoggedIn} from '../middlewares';
+
 const router = express.Router();
-const {renderProfile, renderJoin, renderMain, renderHashtag} = require('../controllers/page');
-const {isLoggedIn, isNotLoggedIn} = require('../middlewares')
 
 // 공적으로 사용하는 변수(데이터) 를 넣을 수 있다?
 // next() 가 있어야 미들웨어로 이동한다.
 router.use((req, res, next) => {
     //  - req.user 데이터는 어디서 입력했는지 
-    //  - router/auth.js ==> login()
+    //  - router/auth.ts ==> login()
     //  - middlewares/index.ts ==> isAuthenticated()
     // passport 마지막 프로세스에서 확인할 수 있다??
     // app.ts ===> app.use(passport.intialize()) 를 진행가 실행 될 때 위에 필드과 함수가 추가된다.
@@ -21,10 +22,10 @@ router.use((req, res, next) => {
 });
 
 // router 에 마지막 미들웨어(render.....) 는 따로 부르는 이름이 존재한다. 
-// Controller 라고 불린다. controllers/page.js
+// Controller 라고 불린다. controllers/page.ts
 router.get('/profile', isLoggedIn, renderProfile);
 router.get('/join', isNotLoggedIn, renderJoin);
 router.get('/', renderMain);
 router.get('/hashtag', renderHashtag);
 
-module.exports = router;
+export default router;

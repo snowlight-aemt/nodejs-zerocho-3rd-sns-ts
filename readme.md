@@ -21,13 +21,29 @@ KAKAO_ID=
 3. `npx tsc` // ts -> js 파일 변환
 4. `!`
    * process.env.COOKIE_SECRET! : undefined 가 절대 아니다.
+5. "allowJs": false,
+```
+npx tsc --build --clean
+```
 
+## Typescript
+* 함수를 사용하는 경우 함수 전체 타입을 선언하자!
+```javascript
+const isLoggedIn: RequestHandler = (req, res, next) => {} // 추천
+const isLoggedIn = (req: Request, res: Response, next: NextFucntion) => {}
+```
 
 ```
 npm i typescript
 npx tsc --init
 npx tsc (npx tsc --noEmit)
 ```
+
+## Typescript 자료
+[타입스크립트 공식 문서](https://www.typescriptlang.org/docs/)  
+[타입스크립트 핸드북 한글 문서](https://typescript-kr.github.io/)  
+[DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped)  
+
 
 ## 파일 구조 대한 정리
 

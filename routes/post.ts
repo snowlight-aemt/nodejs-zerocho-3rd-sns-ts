@@ -1,10 +1,11 @@
-const express = require('express');
+import express from 'express';
+import { isLoggedIn, isNotLoggedIn } from '../middlewares';
+import fs from 'fs';
+import multer from 'multer';
+import path from 'path';
+import { afterUploadImage, uploadPost } from '../controllers/post';
+
 const router = express.Router();
-const { isLoggedIn, isNotLoggedIn } = require('../middlewares');
-const fs = require('fs');
-const multer = require('multer');
-const path = require('path');
-const { afterUploadImage, uploadPost } = require('../controllers/post');
 
 try {
     fs.readdirSync('uploads');
@@ -30,4 +31,4 @@ router.post('/img', isLoggedIn, upload.single('img'), afterUploadImage);
 const upload2 = multer();
 router.post('/', isLoggedIn, upload2.none(), uploadPost);
 
-module.exports = router;
+export default router;

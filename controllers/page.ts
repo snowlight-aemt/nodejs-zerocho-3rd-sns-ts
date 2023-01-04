@@ -1,8 +1,9 @@
-const Post = require('../models/post');
-const User = require('../models/user');
-const Hashtag = require('../models/hashtag');
+import Post from '../models/post';
+import User from '../models/user';
+import Hashtag from '../models/hashtag';
+import {RequestHandler} from "express";
 
-exports.renderProfile = (req, res, next) => {
+const renderProfile: RequestHandler = (req, res, next) => {
     // 서비스를 호출 
 
     res.render('profile', {title: '내 정보 - NodeBird'});
@@ -10,10 +11,10 @@ exports.renderProfile = (req, res, next) => {
     // res.locals.... 한 데이터도 프론트로 넘어가지만
     // res.render('views', {두 번째 파라미터}) 도 프론트로 넘어간다.
 };
-exports.renderJoin = (req, res, next) => {
+const renderJoin: RequestHandler = (req, res, next) => {
     res.render('join', {title: '회원 가입 - NodeBird'});
 };
-exports.renderMain = async (req, res, next) => {
+const renderMain: RequestHandler = async (req, res, next) => {
     try {
         const posts = await Post.findAll({
             include: {
@@ -36,7 +37,7 @@ exports.renderMain = async (req, res, next) => {
 // 라우터 -> 컨트롤러 -> 서비스
 // 계층 레이어 (11장에서 설명)
 
-exports.renderHashtag = async (req, res, next) => {
+const renderHashtag: RequestHandler = async (req, res, next) => {
     const query = req.query.hashtag;
 
     if (!query) {
@@ -45,7 +46,7 @@ exports.renderHashtag = async (req, res, next) => {
 
     try {
         const hashtag = await Hashtag.findOne({ where: { title: query }});
-        let posts = [];
+        let posts: Post[] = [];
         if (hashtag) {
             posts = await hashtag.getPosts({
                 include: [{ model: User, attributes: ['id', 'nick'] }],
@@ -61,3 +62,5 @@ exports.renderHashtag = async (req, res, next) => {
         next(error);
     }
 };
+
+export { renderProfile, renderHashtag, renderJoin, renderMain };

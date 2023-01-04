@@ -1,4 +1,4 @@
-import Sequelize, { Model,CreationOptional } from 'sequelize';
+import Sequelize, {Model, CreationOptional, BelongsToManyGetAssociationsMixin} from 'sequelize';
 import Post from './post';
 
 class Hashtag extends Model {
@@ -6,6 +6,7 @@ class Hashtag extends Model {
     declare title: string;
     declare createdAt: CreationOptional<Date>;
     declare updatedAt: CreationOptional<Date>;
+    declare getPosts: BelongsToManyGetAssociationsMixin<Post>;
     static initiate(sequelize: Sequelize.Sequelize) {
         Hashtag.init({
             title: {

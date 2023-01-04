@@ -1,21 +1,22 @@
-const { hash } = require('bcrypt');
-const Post = require('../models/post');
-const Hashtag = require('../models/hashtag');
+import { hash } from 'bcrypt';
+import Post from '../models/post';
+import Hashtag from '../models/hashtag';
+import {RequestHandler} from "express";
 
-exports.afterUploadImage = (req, res) => {
-    res.json({ url: `/img/${req.file.filename}`});
+const afterUploadImage: RequestHandler = (req, res) => {
+    res.json({ url: `/img/${req.file?.filename}`});
 };
 
-exports.uploadPost = async (req, res, next) => {
+const uploadPost: RequestHandler = async (req, res, next) => {
     // req.body.content, req.body.url
     // content 예: 노드교과서 너무 재미 #노드교솨서 #익스프레스 짱짱 - 태그 추출
     try {
         const post = await Post.create({
             content: req.body.content,
             img: req.body.url,
-            UserId: req.user.id,
+            UserId: req.user?.id,
         })
-        const hashtags = req.body.content.match(/#[^\s#]*/g);
+        const hashtags: string[] = req.body.content.match(/#[^\s#]*/g);
         console.log(hashtags);
         if (hashtags) {
             const result = await Promise.all(hashtags.map((tag) => {
@@ -31,3 +32,5 @@ exports.uploadPost = async (req, res, next) => {
         next(error);
     }
 };
+
+export { afterUploadImage, uploadPost };

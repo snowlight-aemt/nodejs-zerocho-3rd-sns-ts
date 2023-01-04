@@ -1,8 +1,14 @@
-import Sequelize, {CreationOptional, Model } from 'sequelize';
+import Sequelize, {
+    BelongsToManyAddAssociationMixin,
+    NonAttribute,
+    CreationOptional,
+    Model
+} from 'sequelize';
 import Post from './post';
 
 class User extends Model {
     declare id: CreationOptional<number>;
+    declare password: CreationOptional<string>
     declare email: string;
     declare nick: string;
     declare provider: string;
@@ -10,6 +16,9 @@ class User extends Model {
     declare createdAt: CreationOptional<Date>;
     declare updatedAt: CreationOptional<Date>;
     declare deletedAt: CreationOptional<Date>;
+    declare Followers: NonAttribute<User[]>;
+    declare Followings: NonAttribute<User[]>;
+    declare addFollowing: BelongsToManyAddAssociationMixin<User, number>;
     static initiate(sequelize: Sequelize.Sequelize) {
         // 모델(테이블) 정보들
         // 모델 관계

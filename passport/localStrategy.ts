@@ -11,7 +11,7 @@ export default () => {
         passReqToCallback: false, // true 면 async (req, email, password, done)
     }, async (email, password, done) => {  // done(서버 실패, 성공 유저, 로직 실패) 
         // done() 함수가 실행되는 순간 
-        // controllers/auth.js -> password.authenticate('local', (authError, user, info) => {})
+        // controllers/auth.ts -> password.authenticate('local', (authError, user, info) => {})
         try {
             const exUser = await User.findOne({ where: { email }});
             if (exUser) {

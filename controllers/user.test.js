@@ -1,6 +1,6 @@
 jest.mock('../services/user')
 const { follow: followService } = require('../services/user');
-const { follow } = require('../controllers/user');
+const { follow } = require('./user');
 describe('follow', () => {
     const req = {
         user: { id: 1, },

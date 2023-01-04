@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {ErrorRequestHandler} from 'express';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import path =  require('path');
@@ -50,7 +50,7 @@ app.use(session({
 }));
 // passport 는 session 미들웨어 밑에서 생성해야만 한다. !!
 app.use(passport.initialize()); // req.user, req.login, req.isAuth.., req.logout
-// router/page.js ==> login, isAuto..., user,...
+// router/page.ts ==> login, isAuto..., user,...
 // 위에 initialize 에서 login 를 체크가 완료되면
 // passport.session 로 세션에 저장한다.
 app.use(passport.session()); // connect.sid 라는 이름으로 세션 쿠키가 브라우저로 전송.
@@ -68,19 +68,20 @@ app.use((req, res, next) => {
     error.status = 404;
     next(error);
 });
-app.use((err, req, res, next) => {
+const errorhandler: ErrorRequestHandler = (err, req, res, next) => {
     res.locals.message = err.message;
     // 배포 모드 err 를 숨김.
     res.locals.error = process.env.NODE_ENV !== 'production' ? err : {}; // 에러 로그를 서비스한테 넘겨.
     res.status(err.status || 500);
     res.render('error');
     // views/error.html 위치를 찾기 위한 설정. res.render(.....);)
-        // app.set('view engine', 'html');
-        // nunjucks.configure('views', {
-            // express: app,
-            // watch: true,
-        // });    
-});
+    // app.set('view engine', 'html');
+    // nunjucks.configure('views', {
+    // express: app,
+    // watch: true,
+    // });
+}
+app.use(errorhandler);
 
 export default app;
 
