@@ -1,19 +1,19 @@
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const morgan = require('morgan');
-const path =  require('path');
-const session = require('express-session');
-const nunjucks = require('nunjucks');
-const passport = require('passport');
-const dotenv = require('dotenv');
-const { sequelize } = require('./models');
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
+import path =  require('path');
+import session from 'express-session';
+import nunjucks from 'nunjucks';
+import passport from 'passport';
+import dotenv from 'dotenv';
+import { sequelize } from './models';
 
 dotenv.config(); // 여기부터 사용할 수 있다. => (process.env.COOKIE_SECRET)
-const pageRouter = require('./routes/page');
-const authRouter = require('./routes/auth');
-const postRouter = require('./routes/post');
-const userRouter = require('./routes/user');
-const passportConfig = require('./passport');
+import pageRouter from './routes/page';
+import authRouter from './routes/auth';
+import postRouter from './routes/post';
+import userRouter from './routes/user';
+import passportConfig from './passport';
 
 const app = express();
 passportConfig();
@@ -42,7 +42,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));   // 쿠키 전송 처리 { co
 app.use(session({
     resave: false,
     saveUninitialized: false,
-    secret: process.env.COOKIE_SECRET,
+    secret: process.env.COOKIE_SECRET!,
     cookie: {
         httpOnly: true,
         secure: false,
@@ -82,10 +82,7 @@ app.use((err, req, res, next) => {
         // });    
 });
 
-app.listen(app.get('port'), () => {
-    console.log(app.get('port'), '번 포트에서 대기 중');
-})
-
+export default app;
 
 // TODO
 // * 팔로잉 끊기 (시퀀라이즈의 destroy 메소드와 라우터 활용)

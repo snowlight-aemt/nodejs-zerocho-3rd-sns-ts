@@ -1,4 +1,4 @@
-{
+export default {
   "development": {
     "username": "root",
     "password": "nodejsbook",
@@ -8,16 +8,17 @@
   },
   "test": {
     "username": "root",
-    "password": null,
+    "password": "nodebird",
     "database": "database_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
-    "password": null,
+    "password": "nodebird",
     "database": "database_production",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }
-}
+} as const
+// 수정을 하지 않음.

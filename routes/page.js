@@ -8,9 +8,9 @@ const {isLoggedIn, isNotLoggedIn} = require('../middlewares')
 router.use((req, res, next) => {
     //  - req.user 데이터는 어디서 입력했는지 
     //  - router/auth.js ==> login()
-    //  - middlewares/index.js ==> isAuthenticated()
+    //  - middlewares/index.ts ==> isAuthenticated()
     // passport 마지막 프로세스에서 확인할 수 있다??
-    // app.js ===> app.use(passport.intialize()) 를 진행가 실행 될 때 위에 필드과 함수가 추가된다. 
+    // app.ts ===> app.use(passport.intialize()) 를 진행가 실행 될 때 위에 필드과 함수가 추가된다.
 
     res.locals.user = req.user;
     res.locals.followerCount = req.user?.Followers?.length || 0;

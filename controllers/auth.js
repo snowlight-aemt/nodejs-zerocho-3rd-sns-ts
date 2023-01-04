@@ -23,10 +23,10 @@ exports.join = async (req, res, next) => {
 }
 // POST /auth/login
 // 1. login 이 호출
-// 2. 'local' > localStrategy.js 
+// 2. 'local' > localStrategy.ts
 // 3. 
 exports.login = (req, res, next) => {
-    // 콜백 함수 localStrategy.js 와 연관.
+    // 콜백 함수 localStrategy.ts 와 연관.
     // 아래의 소스가 미들웨어 확장 패턴 (req, res, next);
     passport.authenticate('local', (authError, user, info) => {
         if (authError) { // 서버 실패

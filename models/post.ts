@@ -1,7 +1,15 @@
-const Sequelize = require('sequelize');
+import Sequelize, { CreationOptional} from 'sequelize';
+import User from './user';
+import Hashtag from "./hashtag";
 
 class Post extends Sequelize.Model {
-    static initiate(sequelize) {
+    declare id: CreationOptional<number>;
+    declare content: string;
+    declare img: string;
+    declare createdAt: CreationOptional<Date>;
+    declare updatedAt: CreationOptional<Date>;
+
+    static initiate(sequelize: Sequelize.Sequelize) {
         Post.init({
             content: {
                 type: Sequelize.STRING(140),
@@ -23,10 +31,10 @@ class Post extends Sequelize.Model {
         });
     }
 
-    static associate(db) {
-        db.Post.belongsTo(db.User);
-        db.Post.belongsToMany(db.Hashtag, {through: 'PostHashtag'});
+    static associate() {
+        Post.belongsTo(User);
+        Post.belongsToMany(Hashtag, {through: 'PostHashtag'});
     }
 }
 
-module.exports = Post;
+export default Post;

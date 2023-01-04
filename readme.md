@@ -15,6 +15,14 @@ KAKAO_ID=
 * strict: true 엄격한 검사
 * skipLibCheck 모든 라이브러리 스킵 
 
+## Typescript 변환 작업.
+1. 모든 파일에 const ... require => import ... from 를 변경
+2. `npx tsc --noEmit` // 타입 검사
+3. `npx tsc` // ts -> js 파일 변환
+4. `!`
+   * process.env.COOKIE_SECRET! : undefined 가 절대 아니다.
+
+
 ```
 npm i typescript
 npx tsc --init
@@ -26,7 +34,7 @@ npx tsc (npx tsc --noEmit)
 ```
 middlewares
 passport
-app.js
+app.ts
  > routers (auth, page, post)
   > controllers (auth, page)
 views

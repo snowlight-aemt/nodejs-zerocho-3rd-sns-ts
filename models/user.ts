@@ -1,8 +1,16 @@
-const { STRING } = require('sequelize');
-const Sequelize = require('sequelize');
+import Sequelize, {CreationOptional, Model } from 'sequelize';
+import Post from './post';
 
-class User extends Sequelize.Model {
-    static initiate(sequelize) {
+class User extends Model {
+    declare id: CreationOptional<number>;
+    declare email: string;
+    declare nick: string;
+    declare provider: string;
+    declare snsId: string;
+    declare createdAt: CreationOptional<Date>;
+    declare updatedAt: CreationOptional<Date>;
+    declare deletedAt: CreationOptional<Date>;
+    static initiate(sequelize: Sequelize.Sequelize) {
         // 모델(테이블) 정보들
         // 모델 관계
         User.init({
@@ -42,14 +50,14 @@ class User extends Sequelize.Model {
     }
     
     // 테이블에 관계는 asociate 에서 정의한다.
-    static associate(db) {
-        db.User.hasMany(db.Post);
-        db.User.belongsToMany(db.User, { // 팔로워
+    static associate() {
+        User.hasMany(Post);
+        User.belongsToMany(User, { // 팔로워
             foreignKey: 'followingId',
             as: 'Followers',
             through: 'Follow',
         });
-        db.User.belongsToMany(db.User, { // 팔로잉
+        User.belongsToMany(User, { // 팔로잉
             foreignKey: 'followerId',
             as: 'Followings',
             through: 'Follow',
@@ -57,4 +65,4 @@ class User extends Sequelize.Model {
     }
 }
 
-module.exports = User;
+export default User;

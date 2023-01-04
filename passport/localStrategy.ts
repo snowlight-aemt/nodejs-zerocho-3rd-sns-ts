@@ -1,10 +1,10 @@
 
-const passport = require('passport');
-const { Strategy: LocalStrategy } = require('passport-local');
-const bcrypt = require('bcrypt');
-const User = require('../models/user');
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
+import bcrypt from 'bcrypt';
+import User from '../models/user';
 
-module.exports = () => {
+export default () => {
     passport.use(new LocalStrategy({
         usernameField: 'email',
         passwordField: 'password',
